@@ -1,0 +1,27 @@
+version: "3"
+
+networks:
+  default:
+    external:
+      name: webproxy
+
+services:
+  notification-service:
+    build: .
+    container_name: notification-service_1
+    environment:
+      - XDEBUG_CONFIG=remote_host=192.168.2.182
+      - VIRTUAL_HOST=notification.test
+    expose:
+      - "443"
+    volumes:
+      - ../..:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
+    restart: always
+    
+  rabbitmq_notification:
+    image: rabbitmq:3-alpine
+    container_name: notification-service_rabbitmq_1
+    ports:
+      - 35672:5672
+    restart: always
