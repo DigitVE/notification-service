@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-deployment
+spec:
+  selector:
+    matchLabels:
+      app: notification-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+      - name: notification-service
+        image: notification-service:latest
+        imagePullPolicy: Never
+        env:
+          - name: RABBITMQ_HOST
+            value: "rabbitmq_notification"
+          - name: RABBITMQ_PORT
+            value: "5672"
+          - name: RABBITMQ_USER
+            value: "guest"
+          - name: RABBITMQ_PASSWORD
+            value: "guest"
+          - name: RABBITMQ_VHOST
+            value: "/"
