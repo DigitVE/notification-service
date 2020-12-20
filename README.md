@@ -31,9 +31,27 @@
 }
 ```
 
+Для отправки тестового СМС сообщения в очередь можно использовать:
+
+```
+php artisan notification:test-sms-push
+```
+
+Для письма:
+
+```
+php artisan notification:test-mail-push
+```
+
 ## Как развернуть в Docker Compose
 
-wip
+В корне сервиса:
+
+```
+cd docker/local
+./build.sh
+docker-compose up -d
+```
 
 ## Как развернуть в Minikube
 
