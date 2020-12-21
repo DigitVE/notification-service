@@ -50,15 +50,15 @@ class NotificationsPull extends Command
 
         while (1) {
             $queueConnection = Queue::connection(Config::get('queue.default'));
-            $rabbitMQJob = $queueConnection->pop();
+            $job = $queueConnection->pop();
 
-            if ($rabbitMQJob != null) {
-                $payload = $rabbitMQJob->payload();
+            if ($job != null) {
+                $payload = $job->payload();
 
                 try {
                     $data = $payload['data'];
 
-                    $rabbitMQJob->delete();
+                    $job->delete();
 
                     $notificationClass = $notificationTypes[$payload['type']];
 
@@ -66,7 +66,7 @@ class NotificationsPull extends Command
                     $context->setSender(new $notificationClass());
                     $context->send($data);
                 } catch (Throwable $e) {
-                    $rabbitMQJob->release(5);
+                    $job->release(5);
                 }
             }
         }
