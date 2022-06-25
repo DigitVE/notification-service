@@ -1,12 +1,12 @@
-## Сервис нотификаций
+## Notification service
 
-Микросервис для отправки SMS и E-Mail нотификаций.
+Microservice for sending SMS and E-Mail notifications.
 
-## Как работает
+## How it works
 
-Данный микросервис читает очередь в RabbitMQ (в теории работает и с любым другим брокером сообщений, драйвер которого реализован с использованием QueueAPI), указанную в environment, и в зависимости от типа подготавливает и отправляет либо смс, либо почтовое уведомление.
+This microservice read queue from RabbitMQ (you can try to use any other driver that implements QueueAPI) and sending SMS or mail.
 
-Пример сообщения в очереди на отправку письма:
+Example queue message for mail:
 
 ```
 {
@@ -19,7 +19,7 @@
 }
 ```
 
-Пример сообщения в очереди на отправку SMS:
+Example queue message for SMS:
 
 ```
 {
@@ -31,21 +31,21 @@
 }
 ```
 
-Для отправки тестового СМС сообщения в очередь можно использовать:
+For sending test SMS message into queue you can use:
 
 ```
 php artisan notification:test-sms-push
 ```
 
-Для письма:
+And for mail:
 
 ```
 php artisan notification:test-mail-push
 ```
 
-## Как развернуть в Docker Compose
+## How to deploy using Docker Compose
 
-В корне сервиса:
+Run this in root directory:
 
 ```
 cd docker/local
@@ -53,9 +53,9 @@ cd docker/local
 docker-compose up -d
 ```
 
-## Как развернуть в Minikube
+## How to deploy using Minikube
 
-В корне сервиса:
+Run this in root directory:
 
 ```
 docker build -f docker/prod/Dockerfile -t notification-service:latest .
